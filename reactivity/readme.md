@@ -1,62 +1,61 @@
 # Main Aspects of Reactivity
 
-Здравствуйте, меня зовут Дмитрий Карловский и я.. прилетел к вам на турбо-реактивном самолёте. Основная суть реактивного двигателя изображена на картинке..
+Hello, my name is Dmitry Karlovsky and I... flew to you on a turbo-jet plane. The main essence of a jet engine is shown in the picture..
 
 ![Reactivity](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-reactivity.svg)
 
-Тут, казалось бы, хаотичное взаимодействие между молекулами, приводит к тому, что улетающие молекулы опосредованно передают импульс корпусу двигателя. Что ж, давайте подумаем, как реактивные принципы решают или наоборот усугубляют проблемы в программировании. Сравним различные подходы к реактивному программированию. И вытащим на поверхность все их подводные камни.
+Here, the seemingly chaotic interaction between molecules leads to the fact that the escaping molecules indirectly transfer momentum to the engine body. Well, let's think about how reactive principles solve or, on the contrary, aggravate problems in programming. Let's compare different approaches to reactive programming. And we will bring to the surface all their pitfalls.
 
-Это - текстовая расшифровка выступления на [SECON.Weekend Frontend'21](https://vk.com/event207371976). Вы можете [посмотреть видео запись](https://youtu.be/__iGudoQUN8), [прочитать как статью](https://github.com/nin-jin/slides/tree/master/reactivity) (самая актуальная версия), либо [открыть в интерфейсе проведения презентаций](https://nin-jin.github.io/slides/reactivity/).
+This is a text transcript of the speech at [SECON.Weekend Frontend'21](https://vk.com/event207371976). You can [watch the video recording](https://youtu.be/__iGudoQUN8), [read it as an article](https://github.com/nin-jin/slides/tree/master/reactivity) (most current version) , or [open in the presentation interface](https://nin-jin.github.io/slides/reactivity/).
 
 # Reactive-man
 
 Сперва вкратце о себе..
+- 🎶 15 years in frontend
+-    8 years with reagents
+- 😭 I worked on Angular, RXJS and MobX
+- ✨ Your own reactive libs with unique features
+- 💞 A whole framework based on them ([$mol](https://mol.hyoo.ru/))
+  
+I played reactivity up and down, and on this basis I caught a bunch of insights, which I will share with you later.
 
-- 🎶 15 лет во фронтенде
-- 🧪 8 лет с реактивами
-- 😭 Пилил на Angular, RXJS и MobX
-- ✨ Свои реактивные либы с уникальными фичами
-- 💞 Целый фреймворк на их основе ([$mol](https://mol.hyoo.ru/))
+#Attention!
 
-Реактивность я крутил вдоль и поперёк, словил на этой почве кучу инсайтов, которыми с вами далее и поделюсь.
+I will try to be as objective as possible, but.. there may be side effects..
 
-# Attention!
+- 💥 Burning sensation in the lower back
+- 👐Itchy fingertips
+- 📢Increasing the volume of the speech apparatus
+- 🧠 Increased tension in the gyrus area
 
-Я постараюсь быть максимально объективен, но.. возможны побочные эффекты..
-
-- 💥 Жжение в нижних отделах спины
-- 👐 Зуд на кончиках пальцев
-- 📢 Повышение громкости речевого аппарата
-- 🧠 Усиленная напряжённость в области извилин
-
-Надеюсь вы хорошо подкрепились, ибо доклад будет долгим, насыщенным и во многом противоречащим привычной картине мира.
+I hope you are well refreshed, because the report will be long, intense and in many ways contrary to the usual picture of the world.
 
 # Activities
 
-Начнём издалека. Какие бывают виды активностей в нашем коде?
+Let's start from afar. What types of activities are there in our code?
 
 - 🌠Interactivity
 - 🚀Reactivity
 
 ## 🌠Interactivity
 
-Система выполнила только то, что просили.. И ждёт дальнейших команд.
+The system has only done what was asked... And is waiting for further commands.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-interactive.svg)
 
-Все остальные части системы, если на них посмотреть, теперь находятся в неактуальном состоянии. Так что требуется явно пойти и попросить их тоже обновиться.
+All other parts of the system, if you look at them, are now in an obsolete state. So you need to explicitly go and ask them to update too.
 
 ## 🚀Reactivity
 
-Система выполнила то, что просили.. Плюс сама обновила всё приложение, так как знает как разные состояния зависят друг от друга.
+The system did what was asked. Plus it updated the entire application itself, since it knows how different states depend on each other.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-reactive.svg)
 
-Теперь, если посмотреть на любое состояние, оно будет соответствовать внесённым изменениям. Хотя мы явно этого не просили.
+Now, if you look at any state, it will correspond to the changes made. Although we clearly didn't ask for it.
 
 # Components
 
-Реактивность позволяет значительно снизить сложность реализации надёжных программ. Поэтому давайте разберём, что нам потребуется для её реализации..
+Reactivity can significantly reduce the complexity of implementing reliable programs. So let's look at what we need to implement it..
 
 - 📦States
 - 🎬Actions
@@ -64,52 +63,52 @@
 - 💫Invariants
 - 🌉Cascade
 - 🧙‍♂️Runtime
-
+- 
 ## Component: 📦States
 
-Прежде всего нам нужны *состояния* - контейнеры, хранящие некоторые значения.
+First of all, we need *states* - containers that store some values.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-states.svg)
 
 ## Component: 🎬Actions
 
-Сами по себе состояния бесполезны, пока мы не можем с ними взаимодействовать. Поэтому нам нужны *действия*, чтобы их изменять.
+States themselves are useless until we can interact with them. So we need *actions* to change them.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-actions.svg)
 
 ## Component: 💨Reactions
 
-Но изменение состояний, без возможности их увидеть, тоже не имеет смысл. Поэтому нам нужны *реакции* - некоторые процедуры, которые запускаются при изменении состояния и производят побочные эффекты.
+But changing states without the ability to see them also makes no sense. So we need *reactions* - some procedures that run when the state changes and produce side effects.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-reactions.svg)
 
 ## Component: 💫Invariants
 
-Если побочным эффектом реакции является обновление другого состояния, то мы получаем *инвариант* - соотношение, между состояниями, которое сохраняется неизменным при любых изменениях этих состояний.
+If a side effect of the reaction is the update of another state, then we get an *invariant* - a relationship between states that remains unchanged for any changes in these states.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-invariants.svg)
 
-Инвариант может быть выражен явно, как, например, формула в электронной таблице. Так и собираться в коде из других абстракций. Например, как комбинация из обработчика события, стрима трансформаций и побочного эффекта. Или, например, шаблон, формирующий DOM из параметров компонента.
+An invariant can be expressed explicitly, such as a formula in a spreadsheet. So it can be assembled in code from other abstractions. For example, as a combination of an event handler, a transformation stream and a side effect. Or, for example, a template that forms the DOM from component parameters.
 
 ## Component: 🌉Cascade
 
-Прелесть инвариантов в том, что мы можем провязать ими все состояния приложения в единый граф.
+The beauty of invariants is that we can tie all application states into a single graph.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-cascade.svg)
 
-Таким образом изменение одного состояния *каскадно* отразится на всём приложении автоматически. То есть мы получили ту самую реактивность.
+Thus, a change in one state will *cascade* affect the entire application automatically. That is, we got that very reactivity. We can use them to tie all the application states into a single graph.
 
 ## Component: 🧙Runtime
 
-И чтобы реактивность, наконец, заработала, нам нужен некоторый *рантайм*, который будет отслеживать изменения одних состояний и обновлять значения других в соответствии с заданными нами инвариантами.
+And for reactivity to finally work, we need some *runtime* that will track changes in some states and update the values ​​of others in accordance with the invariants we have specified.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-runtime.svg)
 
-Если вы не понимаете как он работает, то для вас реактивность будет выглядеть как магия. Но стоит только разобраться, и это становится ещё одной технологией в вашем арсенале.
+If you don't understand how it works, then reactivity will look like magic to you. But once you figure it out, it becomes another technology in your arsenal.
 
 # Wishes
 
-Давайте сформулируем, какие качества мы хотим получить от реактивности, а какие, наоборот, избежать..
+Let's formulate what qualities we want to get from reactivity, and which ones, on the contrary, to avoid..
 
 - 🤹‍♂️Reasonability
 - 🐵Stability
@@ -118,25 +117,24 @@
 
 ## Wish: 🤹Reasonability
 
-Лишние вычисления сами по себе постепенно замедляют приложение. Но это пол беды. Каждое лишнее вычисление приводит к другим лишним вычислениям. В результате чего лишние вычисления растут как снежный ком.
+The extra computation itself gradually slows down the application. But this is half the trouble. Every extra calculation leads to other extra calculations. As a result, unnecessary calculations grow like a snowball.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-snowboll.svg)
 
-Поэтому, чем раньше мы их остановим, тем меньше ресурсов суммарно потратим. А значит получим более отзывчивое приложение, меньше жрущее батарейку.
+Therefore, the sooner we stop them, the less resources we will spend in total. This means we’ll get a more responsive application that consumes less battery.
 
 ## Wish: 🐵Stability
 
-После изменения состояния, результат должен быть такой же, как старт с нуля в этом же состоянии. Иначе реальное поведение у пользователя может отличаться от того, на котором отлаживает разработчик.
-
+After changing the state, the result should be the same as starting from scratch in the same state. Otherwise, the actual behavior of the user may differ from that on which the developer is debugging.
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-stable.svg)
 
-Звучит, вроде бы, самоочевидно, но вы ужаснётесь, когда узнаете, что стабильность поведения почти нигде не гарантируется. В результате возможна ситуация, когда программист взял тот же самый код, открыл те же самые окошки, ввёл те же самые значения.. но у пользователя баг есть, а у программиста он не воспроизводится. И тут начинается весёлая отладка.
+It sounds self-evident, but you will be horrified when you find out that stability of behavior is almost never guaranteed. As a result, a situation is possible where the programmer took the same code, opened the same windows, entered the same values... but the user has a bug, and the programmer cannot reproduce it. And then the fun debugging begins.
 
 ## Wish: 💸Economy
 
-Важно понимать, что вся эта реактивность весьма не бесплатна. Помимо собственно значений, приходится хранить разную мета-информацию, объём которой может быть в несколько раз больше.
+It is important to understand that all this reactivity is not free. In addition to the actual values, it is necessary to store various meta-information, the volume of which can be several times larger.
 
-Возьмём, например, V8 и посмотрим сколько требуют памяти разные типы данных в самом оптимистичном случае, когда JIT всё максимально оптимизировал..
+Let's take V8, for example, and see how much memory different data types require in the most optimistic case, when JIT has optimized everything as much as possible..
 
 | Value    | Place   | Cost
 |----------|---------|-----
@@ -151,12 +149,11 @@
 | Closure  | Heap    | 24
 | Context  | Heap    | 16
 
-То, что лежит в Heap кушает дополнительные 4 байта на ссылку (Ref). Unit - это всякие undefined, null, false, true и прочие малые невариативные примитивные значения. Int после миллиарда хранится уже как Float, мантисса которого - 48 бит. Обратите внимание, что это уже ссылочный тип, как и BigInt, а значит кушает дополнительно 4 байта на ссылку. Контекст для замыкания хранится, только если функция замкнута на какие-либо переменные. Размер контекста, соответственно, зависит от числа этих переменных. Как видно (Inplace), каждая переменная добавляет к контексту по 4 байта.
+What lies in Heap eats an additional 4 bytes per link (Ref). Unit is all sorts of undefined, null, false, true and other small non-variable primitive values. Int after a billion is stored as a Float, the mantissa of which is 48 bits. Please note that this is already a reference type, like BigInt, which means it consumes an additional 4 bytes per link. The context for the closure is stored only if the function is closed to any variables. The size of the context accordingly depends on the number of these variables. As you can see (Inplace), each variable adds 4 bytes to the context.
 
-Несложно заметить, что объекты относительно дёшевы. Массивы уже подороже, ибо это фактически составные объекты. А вот замыкания - это очень дорогие штуки сами по себе, даже без учёта хранимых в них данных.
+It is easy to notice that the objects are relatively cheap. Arrays are already more expensive, because they are actually composite objects. But closures are very expensive things in themselves, even without taking into account the data stored in them.
 
-Приведу несколько примеров расчёта потребления памяти..
-
+Let me give you a few examples of calculating memory consumption..
 ```
 function make_ints_state( ... state: number[] ) {
 	return { get: ()=> state }
@@ -177,50 +174,50 @@ const state3 = 777
 // 4
 ```
 
-Резюмируя: в зависимости от выбранных абстракций, потребление памяти может отличаться на порядок. И если разница между 1 и 10 мегабайтами не особо заметна. То разница между 100 мегабайтами и гигабайтом заметна будет однозначно. В лучшем случае всё будет тормозить. А в худшем приложение просто закрешится.
+To summarize: depending on the selected abstractions, memory consumption can differ by an order of magnitude. And if the difference between 1 and 10 megabytes is not particularly noticeable. The difference between 100 megabytes and a gigabyte will be clearly noticeable. At best, everything will slow down. And in the worst case, the application will simply crash.
 
-Пример из жизни: открываем в Google Docs спецификацию XPath на 200 страниц и получаем пол гигабайта потребления памяти.
+A real-life example: we open a 200-page XPath specification in Google Docs and get half a gigabyte of memory consumption.
 
-Или другой пример: я сейчас работаю над новой реализацией реактивности. И пока летел вчера в самолёте, мидитировал над этой табличкой. В результате, я сообразил, как уменьшить потребление памяти в 2 раза, превратив объект с двумя массивами в.. просто один массив. Разумеется, мне для этого потребовалось так не модное сейчас наследование.
+Or another example: I'm currently working on a new implementation of reactivity. And while I was flying on the plane yesterday, I meditated over this sign. As a result, I figured out how to reduce memory consumption by 2 times, turning an object with two arrays into... just one array. Of course, for this I needed inheritance, which is so unfashionable now.
 
 ## Wish: 💫Consistency
 
-Ну и, конечно же, все состояния приложения должны быть согласованы между собой в любой момент времени.
+And, of course, all application states must be consistent with each other at any given time.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-interactive.svg)
 
-Если пользователь (или другая программная система), пусть даже на мгновение, увидит рассогласование, то в лучшем случае он будет обескуражен. В худшем - и вы, и он потеряете деньги, репутацию и прочие плюшки.
+If the user (or other software system) sees a discrepancy, even momentarily, he or she will be discouraged at best. At worst, both you and he will lose money, reputation and other goodies.
 
 # Aspects
 
-Теперь разберём различные аспекты реализации реактивности, на которые стоит обратить внимание при выборе архитектуры, библиотек и фреймворков..
+Now let's look at various aspects of implementing reactivity that you should pay attention to when choosing architecture, libraries and frameworks.
 
-- **Style**: Стилистика кода
-- **Watch**: Наблюдение за изменениями
-- **Dupes**: Эквивалентные изменения
-- **Origin**: Инициатор пересчёта
-- **Tonus**: Энергичность реакций 
-- **Order**: Порядок реакций 
-- **Flow**: Конфигурация потоков данных  
-- **Error**: Нештатные ситуации
-- **Cycle**: Циклические зависимости 
-- **Depth**: Ограничение глубины 
-- **Atomic**: Атомарность изменений
-- **Extern**: Внешние взаимодействия
+- **Style**: Code style
+- **Watch**: Monitoring changes
+- **Dupes**: Equivalent changes
+- **Origin**: Recalculation initiator
+- **Tonus**: Vigor of reactions
+- **Order**: Order of reactions
+- **Flow**: Data flow configuration
+- **Error**: Emergency situations
+- **Cycle**: Cyclic dependencies
+- **Depth**: Depth limit
+- **Atomic**: Atomicity of changes
+- **Extern**: External interactions
 
 ## Style
 
-Условно можно выделить 3 стиля написания кода..
+Conventionally, there are 3 styles of writing code.
 
-- 🧐Proc: Процедурный
-- 🤯Func: Функциональный
-- 🤓Obj: Объектный
+- 🧐Proc: Procedural
+- 🤯Func: Functional
+- 🤓Obj: Object
 
-Разные библиотеки могу смешивать их в разных пропорциях, но как правило есть чёткое тяготение к одному из них.
+Different libraries can mix them in different proportions, but as a rule there is a clear inclination towards one of them.
 
 ### Style: 🧐Proc
 
-Тут эпизодически запускается процедура обновления, которая читает одни состояния, вычисляет другие и записывает их. Напишем простейшую, хоть и не очень эффективную, реализацию..
+Here an update procedure is sporadically launched, which reads some states, calculates others and writes them. Let's write a simple, although not very effective, implementation...
 
 ```javascript
 let Name = 'Jin'
@@ -236,11 +233,11 @@ setInterval( ()=> {
 } )
 ```
 
-Примерно так описываются инварианты, например, в Meteor и Angular по дефолту. Разумеется они запускают пересчёт не на каждую миллисекунду, а более оптимально, но общую суть это слабо меняет: рантайм периодически перезапускает инварианты, не зная какие состояния могут быть ими изменены. А ведь актуальные значения этих состояний могут нам быть не интересны, но вычислятся они в любом случае. Поэтому такой подход получается всё равно не очень эффективным.
+Invariants are described approximately this way, for example, in Meteor and Angular by default. Of course, they do not start the recalculation every millisecond, but more optimally, but this does not change the general essence: runtime periodically restarts the invariants, not knowing which states can be changed by them. But the actual values ​​of these states may not be interesting to us, but they will be calculated in any case. Therefore, this approach is still not very effective.
 
 ### Style: 🤯Func
 
-На волне хайпа многие упарываются по чистым функциям, превращая свой код в головоломку..
+In the wake of hype, many focus on pure functions, turning their code into a puzzle...
 
 ```javascript
 const Name = new BehaviorSubject( 'Jin' )
@@ -260,17 +257,17 @@ const Short = Count.pipe(
 )
 ```
 
-Что и зачем делает этот код на RxJS не сможет сходу сказать даже опытный *стример*. А это ведь самый простой пример, далёкий от реальной жести.
+Even an experienced *streamer* cannot immediately tell what this RxJS code does and why. But this is the simplest example, far from the real thing.
 
-Однако, умные программисты очень любят головоломки. Поэтому они тратят кучу времени на изучение хитрых абстракций, одинаково далёких как от того, как работает машина, так и от того, как работает мозг человека. Они пишут лаконичный, но замысловатый код. И гордятся тем, что они понимают то, что мало кто ещё способен понять. На проекте же это сказывается скорее негативно, привнося излишнюю сложность туда, где и без того полно не простых вещей.
+However, smart programmers love puzzles. So they spend a lot of time studying cunning abstractions that are equally distant from both how a machine works and how the human brain works. They write concise but intricate code. And they are proud that they understand what few others are able to understand. This has a rather negative effect on the project, introducing unnecessary complexity to an area that is already full of difficult things.
 
-Раньше я тоже писал хитрый код, но жизнь меня научила, что лучше писать максимально простой код, доступный даже новичку в программировании, а не только победителям олимпиад по информатике.
+I used to write tricky code, too, but life taught me that it’s better to write the simplest code possible, accessible even to a beginner in programming, and not just to winners of computer science Olympiads.
 
-Кроме того, обилие замыканий, свойственных функциональному коду, приводит к повышенному потреблению памяти.
+In addition, the abundance of closures inherent in functional code leads to increased memory consumption.
 
 ### Style: 🤓Obj
 
-Тут программа состоит из множества объектов, обладающих состояниями, связанных инвариантами в единый граф. Код в этом стиле выглядит так же, как и обычный ООП код, но с добавлением реактивных мемоизаторов..
+Here the program consists of many objects with states connected by invariants into a single graph. Code in this style looks the same as regular OOP code, but with the addition of reactive memoizers.
 
 ```javascript
 class State {
@@ -290,34 +287,34 @@ class State {
 }
 ```
 
-Многие, наверняка, слышали утверждение, что "инвалидация кешей - один из сложнейших вопросов в программировании". Так вот, в реактивном рантайме, такой вопрос вообще не стоит.
+Many people have probably heard the statement that “cache invalidation is one of the most difficult issues in programming.” So, in reactive runtime, such a question does not arise at all.
 
-Этот подход мне видится наиболее оптимальным, так как он хорошо укладывается в то, как мыслит человек (а ему привычно взаимодействовать с объектами), и в то, как работает компьютер (объект - это просто мутабельная структура в памяти). Рантайм чётко понимает какой метод какое состояние вычисляет. А объектная декомпозиция позволяет легко это всё масштабировать. Именно поэтому объектный стиль и используется в $mol, MobX и Vue.
+This approach seems to me to be the most optimal, since it fits well with the way a person thinks (and he is accustomed to interacting with objects) and with the way a computer works (an object is simply a mutable structure in memory). Runtime clearly understands which method calculates which state. And object decomposition makes it all easy to scale. This is why the object style is used in $mol, MobX and Vue.
 
-## Watch
+##Watch
 
-Как рантайм может узнать об изменениях?
+How can runtime know about changes?
 
-- 🔎Polling: Периодическая сверка
-- 🎇Events: Возникновение события
-- 🤝Links: Список подписчиков
+- 🔎Polling: Periodic reconciliation
+- 🎇Events: Occurrence of an event
+- 🤝Links: List of subscribers
 
 ### Watch: 🔎Polling
 
-Состояния хранят лишь значения и всё. Рантайм периодически сверяет текущее значение с предыдущим. И если они отличаются - запускает реакции.
+States store only values ​​and that’s it. Runtime periodically checks the current value with the previous one. And if they differ, it triggers reactions.
 
 ```javascript
 // sometimes
 if( state !== state_prev ) reactions()
 ```
 
-Так, например, работает Angular, Svelte, React. Беда этого подхода в том, что на каждый чих выполняется большой объём работы только лишь для того, чтобы выяснить, что почти ничего не поменялось.
+This is how Angular, Svelte, and React work, for example. The problem with this approach is that for every sneeze, a lot of work is done, only to find out that almost nothing has changed.
 
-Вам может показаться, что обычное сравнение - это плёвая операция. И это действительно так в синтетических бенчмарках. Но в реальности состояния разбросаны по памяти, что даёт посредственное использование процессорных кешей. А вишенка на торте - такие сверки приходится выполнять после каждой реакции, чтобы выяснить, что именно оные поменяли в состоянии.
+It may seem to you that ordinary comparison is a trivial operation. And this is true in synthetic benchmarks. But in reality, states are scattered across memory, which results in mediocre use of processor caches. And the cherry on the cake is that such reconciliations have to be performed after each reaction in order to find out what exactly they changed in the state.
 
 ### Watch: 🎇Events
 
-Каждое состояние хранит дополнительно список функций обработчиков изменения. При каждом изменении состояния вызываются все подписчики.
+Each state additionally stores a list of change handler functions. Every time the state changes, all subscribers are called.
 
 ```javascript
 // on change
@@ -326,13 +323,13 @@ for( const reaction of this.reactions ) {
 }
 ```
 
-Это может быть инициировано вручную, через сеттер или прокси. Но в любом случае состояние ничего больше не знает про соседние состояния, а взаимодействие всегда одностороннее. Это сильно ограничивает возможные алгоритмы оптимизации. А также усложняет отладку, ведь чтобы узнать кто там от кого как зависит - это целый квест.
+This can be initiated manually, through a setter or a proxy. But in any case, the state knows nothing more about neighboring states, and the interaction is always one-way. This greatly limits the possible optimization algorithms. It also complicates debugging, because to find out who depends on whom in what way is a whole quest.
 
-А самое печальное: хранение массива из замыканий кушает много памяти. И с этим ничего не сделать.
+And the saddest thing is that storing an array of closures eats up a lot of memory. And nothing can be done about it.
 
 ### Watch: 🤝Links
 
-Состояния хранят прямые ссылки друг на друга, образуя глобальный граф. Массивы ссылок - это относительно экономно по памяти, ведь каждая ссылка - это всего 4-8 байта. Для коммуникации с соседями достаточно просто пробежаться по массиву и дёрнуть нужный метод у соседнего стейта.
+States store direct references to each other, forming a global graph. Arrays of links are relatively memory-efficient, because each link is only 4-8 bytes. To communicate with neighbors, you just need to run through the array and pull the desired method from the neighboring state.
 
 ```javascript
 // on change
@@ -347,32 +344,32 @@ for( const master of this.masters ) {
 }
 ```
 
-В первом примере вы видите, что при изменении одного состояния мы говорим всем зависимым, что они устарели. А во втором, что при завершении вычисления одного состояния, мы говорим всем зависимостям, что вычисление закончено, и можно освободить кеши, которые они могли держать на случай повторного обращения. Таких вариантов взаимодействия может быть много, что даёт максимум гибкости в поддерживаемых алгоритмах.
+In the first example, you can see that when one state changes, we tell all dependents that they are out of date. And in the second, when the calculation of one state is completed, we tell all dependencies that the calculation is finished, and the caches that they could hold in case of repeated access can be freed. There can be many such interaction options, which gives maximum flexibility in the supported algorithms.
 
-Кроме того, при отладке, гораздо проще ходить по прямым ссылкам между объектами, чем выцеплять нужную информацию из захваченных замыканиями контекстов.
+In addition, when debugging, it is much easier to follow direct links between objects than to extract the necessary information from contexts captured by closures.
 
 ## Dupes
 
-Порой значение меняется на эквивалентное. И тут есть разные подходы к отсечению вырожденных вычислений..
+Sometimes the value changes to an equivalent one. And here there are different approaches to cutting off degenerate calculations..
 
-- 👯Every: Реакция на каждое действие
-- 🆔Identity: Сравнение по ссылке
-- 🎭Equality: Структурное сравнение
-- 🔀Reconcile: Структурная сверка
+- 👯Every: Reaction to every action
+- 🆔Identity: Comparison by link
+- 🎭Equality: Structural comparison
+- 🔀Reconcile: Structural reconciliation
 
 ### Dupes: 👯Every
 
-В библиотеках типа RxJS каждое значение является уникальным событием, что приводит к ненужному запуску реакций.
+In libraries like RxJS, each value is a unique event, which results in reactions being fired unnecessarily.
 
 ```ts
 777 != 777
 ```
 
-Чтобы этого не происходило, нужно писать дополнительный код, который часто забывают, и потом огребают.
+To prevent this from happening, you need to write additional code, which is often forgotten and then screwed up.
 
 ### Dupes: 🆔Identity
 
-Многие библиотеки всё же умеют сравнивать значения. И если состояние не поменялось, то реакции не срабатывают. А если поменялось, даже на эквивалентное значение, то срабатывают.
+Many libraries can still compare values. And if the state has not changed, then the reactions do not work. And if it has changed, even by an equivalent value, then they work.
 
 ```ts
         777 == 777
@@ -380,11 +377,11 @@ for( const master of this.masters ) {
 [ 1, 2, 3 ] != [ 1, 2, 3 ]
 ```
 
-Если мы нафильтровали новый массив, с тем же содержимым, то скорее всего нам не нужно запускать каскад вычислений. Но вручную уследить за всеми такими местами - мало реалистично.
+If we filtered a new array with the same content, then most likely we do not need to run a cascade of calculations. But manually keeping track of all such places is not very realistic.
 
 ### Dupes: 🎭Equality
 
-Наиболее продвинутые библиотеки, типа $mol_atom, делают глубокое сравнение нового и старого значения. В некоторых других, типа CellX, его можно включить в настроках.
+The most advanced libraries, like $mol_atom, do a deep comparison of the new and old value. In some others, such as CellX, it can be enabled in the settings.
 
 ```ts
         777 == 777
@@ -394,15 +391,15 @@ for( const master of this.masters ) {
 [ 1, 2, 3 ] != [ 3, 2, 1 ]
 ```
 
-Это позволяет отсекать лишние вычисления как можно раньше - в момент внесения изменений. А не в момент рендеринга заново сгенерированного VDOM в реальный DOM, как это часто происходит в React, чтобы узнать, что в доме-то менять и нечего.
+This allows you to cut off unnecessary calculations as early as possible - at the time of making changes. And not at the moment of rendering the newly generated VDOM into the real DOM, as often happens in React, in order to find out that there is nothing to change in the house.
 
-Глубокое сравнение - это, безусловно, сама по себе более дорогая операция, чем просто сравнение двух ссылок. Однако, рано или поздно, сравнить всё содержимое всё равно придётся. Но гораздо быстрее это сделать пока данные рядом, а не когда они разлетятся по тысяче компонент в процессе рендеринга.
+Deep comparison is, of course, a more expensive operation in itself than simply comparing two links. However, sooner or later, you will still have to compare all the contents. But it’s much faster to do this while the data is nearby, and not when it scatters across a thousand components during the rendering process.
 
-Тем не менее, если данные поменялись, то полетят дальше по приложению и будут глубоко сравниваться снова и снова, что никуда не годится. Поэтому тут важно реализовывать кеширование результата глубокого сравнения для каждой пары сравниваемых объектов.
+However, if the data has changed, it will fly further through the application and will be deeply compared again and again, which is no good. Therefore, it is important to implement caching of the result of a deep comparison for each pair of compared objects.
 
 ### Dupes: 🔀Reconcile
 
-Наконец, можно пойти ещё дальше, и не просто глубоко сравнивать значения, но и делать их сверку, чтобы сохранить ссылки на старые объекты, когда они эквивалентны новым.
+Finally, you can go even further and not just compare values ​​deeply, but also reconcile them to preserve references to old objects when they are equivalent to new ones.
 
 ```ts
 const A = { foo: 1, bar: [] }
@@ -414,270 +411,269 @@ assert( B.foo === 2 )
 assert( B.bar === A.bar )
 ```
 
-Как видите, `A` и `B` у нас тут отличаются, но свойство `bar` осталось таким как было. Это хорошо с точки зрения GC, ведь мы переиспользуем объекты, находящиеся в старом поколении сборщика мусора. А объект из молодого поколения при сверке был выборошен, что очень быстро.
+As you can see, `A` and `B` are different here, but the `bar` property remains the same. This is good from the GC's point of view, because we are reusing objects that were in the old generation of garbage collector. And the object from the younger generation was discarded during reconciliation, which was very quick.
 
-Кроме того, когда вдальнейшем в компоненте, что рендерит `bar`, будет снова произведена его сверка, то произойдёт это крайне быстро, ведь старое и новое значения будут идентичны. С другой стороны, если объекты всё же будут отличаться, то повторная сверка снова пойдёт по всем внутреннстям объекта. Тут опять же необходимо кеширование. Но..
+In addition, when later the component that renders `bar` is checked again, this will happen extremely quickly, because the old and new values ​​will be identical. On the other hand, if the objects still differ, then the re-verification will again go through all the insides of the object. Here again caching is necessary. But..
 
-Изменение полей нового объекта на значения из старого - это не всегда безопасная операция. Например, с DOM-элементами такие финты проворачивать нельзя. В лучшем случае это не заработает, а в худшем вообще его сломает. В ряде случаев вы будете получать исключение при попытке изменить объект. Порой изменения будут попросту игнорироваться, а порой запускать сеттеры, делающие какие-нибудь стрёмные дела.
+Changing the fields of a new object to values ​​from the old one is not always a safe operation. For example, such tricks cannot be performed with DOM elements. At best it won't work, and at worst it will break it altogether. In some cases, you will receive an exception when you try to modify an object. Sometimes changes will simply be ignored, and sometimes setters will be launched that do some weird things.
 
-К тому же, если объекты фактически идентичны, нам надо сначала их глубоко сравнить. И если они одинаковы, то вернуть старый, а если нет - начать менять новый. Ну либо сразу начать менять новый, чтобы потом выяснить, что мы поменяли все его свойства, так что вернуть надо старый.
+In addition, if the objects are virtually identical, we need to compare them deeply first. And if they are the same, then return the old one, and if not, start changing the new one. Well, either immediately start changing the new one, only to find out later that we have changed all its properties, so we need to return the old one.
 
-Короче, данный подход не самый шустрый и надёжный, поэтому в $mol мы от него отказались в пользу глубокого сравнения с кешированием.
+In short, this approach is not the fastest or most reliable, so in $mol we abandoned it in favor of a deep comparison with caching.
 
-## Origin
+##Origin
 
-Не смотря на то, что начинается всё с того, что кто-то что-то поменял, финальное решение пересчитывать ли тот или иной инвариант может принимать как зависимость, так и зависимое состояние. 
+Despite the fact that it all starts with the fact that someone changed something, the final decision whether to recalculate this or that invariant can take both a dependence and a dependent state.
 
-- 🥌Push: Зависимость проталкивает
-- 🚂Pull: Зависимый затягивает
+- 🥌Push: Addiction pushes
+- 🚂Pull: The addict pulls
 
 ### Origin: 🥌Push
 
-При изменении зависимости безусловно срабатывают реакции, которые вычисляют и пишут в зависимые состояния новые значения. Так, например, работает RxJS, Effector и другие процедурные/функциональные библиотеки/фреймворки.
+When the dependency changes, reactions are certainly triggered, which calculate and write new values ​​to the dependent states. This is how, for example, RxJS, Effector and other procedural/functional libraries/frameworks work.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-push.svg)
 
-И это отлично работает для статичного графа инвариантов. Однако, в любом не совсем тривиальном приложении у нас есть динамика. Ну, банально: если мы переключаемся между страницами, то надо освободить ресурсы предыдущей страницы (и в частности отписаться от изменения данных) и захватить ресурсы для новой страницы (и в частности подписаться на изменения данных).
+And this works great for a static invariant graph. However, in any not entirely trivial application we have dynamics. Well, it’s trivial: if we switch between pages, then we need to release the resources of the previous page (and in particular unsubscribe from data changes) and seize resources for the new page (and in particular subscribe to data changes).
 
-То есть наш граф инвариантов должен уметь меняться в процессе пересчёта этих инвариантов. А это значит, что действуя по принципу проталкивания мы будем часто попадать в ситуации вида: долго-долго вычисляли какое-то значение, а оно в итоге никому не понадобилось, ибо потребитель был уничтожен.
+That is, our graph of invariants must be able to change in the process of recalculating these invariants. This means that when acting on the push principle, we will often find ourselves in situations like this: we spent a long, long time calculating some value, but in the end no one needed it, because the consumer was destroyed.
 
 ### Origin: 🚂Pull
 
-При обращении к зависимому состоянию, происходит вычисление инварианта, который вытягивает значения из зависимостей и возвращает актуальное значение. Так работают $mol_wire, CellX, MobX и Vue.
+When accessing a dependent state, an invariant is calculated, which pulls values ​​from the dependencies and returns the current value. This is how $mol_wire, CellX, MobX and Vue work.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-pull.svg)
 
-Тут уже чисто логически нам всегда известно, что если вычисление произошло, то его результат кому-то нужен. А если не нужен, то и вычисления не произойдёт. Поэтому подход с затягиванием видится мне более практичным.
+Here, purely logically, we always know that if a calculation has occurred, then someone needs its result. And if it is not needed, then the calculation will not occur. Therefore, the delaying approach seems to me more practical.
 
 ## Tonus
 
-Вычислять зависимые состояния можно как можно раньше, а можно как можно позже, вплоть до отказа от вычислений, если это возможно..
+You can calculate dependent states as early as possible, or as late as possible, even to the point of abandoning calculations, if possible.
 
-- 🍔Instant: Мгновенные реакции
-- ⏰Defer: Отложенные реакции
-- 🦥Lazy: Ленивые вычисления
+- 🍔Instant: Instant reactions
+- ⏰Defer: Deferred reactions
+-   Lazy: Lazy calculations
 
 ### Tonus: 🍔Instant
 
-В таких библиотеках, как RxJS, пересчёт зависимых состояний происходит сразу же при изменении зависимости. Если нам нужно изменить несколько состояний подряд, то это может привести к лишним вычислениям.
+In libraries such as RxJS, dependent states are recalculated immediately when the dependency changes. If we need to change several states in a row, this may lead to unnecessary calculations.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-instant.svg)
 
-Более того, эти лишние промежуточные вычисления производят неконсистентное состояние, вычисляемое частично из уже обновлённых состояний, а частично из ещё не обновлённых. А неконсистентное состояние, пусть даже и временно, - это очень опасная штука. В лучшем случае пользователь будет наблюдать *глитчи* - визуальное мерцание. В худшем - приложение будет работать не корректно и сыпать разнообразными ошибками.
+Moreover, these extra intermediate calculations produce an inconsistent state, calculated partly from states that have already been updated, and partly from states that have not yet been updated. And an inconsistent state, even if temporary, is a very dangerous thing. At best, the user will observe *glitches* - visual flickering. At worst, the application will not work correctly and contain various errors.
 
 ### Tonus: ⏰Defer
 
-Чтобы избежать *глитчей* пересчёт может откладываться на потом, чтобы выполнять его лишь один раз, сколько бы зависимостей ни было обновлено.
+To avoid *glitches* the recalculation can be delayed until later, so that it is performed only once, no matter how many dependencies are updated.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-defer.svg)
 
-Однако, пересчёт будет произведён в любом случае, даже если результат нам не пригодится.
+However, the recalculation will be carried out in any case, even if the result is not useful to us.
 
-### Tonus: 🦥Lazy
+### Tonus:   Lazy
 
-В моделях реактивности с затягиванием возможно ленивое вычисление инвариантов - только в момент, когда зависимое состояние действительно потребовалось.
+In drag-on reactivity models, it is possible to lazily evaluate invariants - only at the moment when the dependent state is actually needed.****
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-lazy.svg)
 
-При изменении исходных состояний, мы не вычисляем зависимые и даже не планируем их вычисление, а лишь помечаем их как устаревшие. И если впоследствии к ним обратиться, то они начнут вычисляться.
+When the initial states change, we do not calculate the dependent ones and do not even schedule their calculation, but only mark them as outdated. And if you subsequently access them, they will begin to be calculated.
 
-Это одновременно и самый экономный подход и самый консистентный, так как гарантирует, что, когда бы мы ни обратились к состоянию, полученное значение будет актуальным.
+This is both the most economical approach and the most consistent, since it guarantees that whenever we access the state, the resulting value will be relevant.
 
 ## Order
 
-С порядком исполнения реакций есть свои особенности, которые зачастую отдаются на откуп рандому. Однако, давайте разберём все возможные варианты..
+The order of execution of reactions has its own peculiarities, which are often left to random. However, let's look at all the possible options...
 
-- 📰Subscribe: По времени подписки
-- 🧨Event: По времени возникновения события
-- 📶Deep: По глубине зависимости
-- 👨‍💻Code: По положению в программе
-
+- 📰Subscribe: By subscription time
+-   Event: By time of event occurrence
+- 📶Deep: According to the depth of dependence
+- 👨‍💻Code: By position in the program
+- 
 ### Order: 📰Subscribe
 
-Какая реакция появилась раньше, та и срабатывает раньше. В любом нетривиальном приложении, список реакций меняется со временем, а значит выстроиться они могут практически в любом порядке.
+Whichever reaction appeared earlier is triggered earlier. In any non-trivial application, the list of reactions changes over time, which means they can be arranged in almost any order.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-order-subscribe.svg)
 
-Получается скрытое состояние, влияющее на работу приложения через разный порядок побочных эффектов, которые могут давать различные взаимные наводки. Получаем нестабильность поведения, что осложняет отладку и тестирование.
+The result is a hidden state that affects the operation of the application through a different order of side effects, which can give various mutual interferences. We get unstable behavior, which complicates debugging and testing.
 
-Это - типичная беда большинства библиотек.
+This is a typical problem with most libraries.
 
 ### Order: 🧨Event
 
-Предположим нам удалось тем или иным способом зафиксировать порядок подписок. Однако, есть и другой источник нестабильности - порядок совершения действий.
+Let's assume we managed to fix the order of subscriptions in one way or another. However, there is another source of instability - the order of actions.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-order-event.svg)
 
-Явно или неявно изменяя состояния в разном порядке мы опять же можем получить разный порядок срабатывания реакций. К сожалению, большинство библиотек подвержено и этой проблеме.
+By explicitly or implicitly changing states in different orders, we can again get different orders of reactions. Unfortunately, most libraries are susceptible to this problem.
 
 ### Order: 📶Deep
 
-Некоторые библиотеки используют так называемую *топологическую сортировку графа*, чтобы пересчитывать инварианты в оптимальном порядке от менее зависимых к более зависимым.
+Some libraries use so-called *topological graph sorting* to recalculate invariants in an optimal order from less dependent to more dependent.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-order-deep.svg)
 
-В данном примере `Post` меняется на такой, к которому у нас нет доступа. Сначала будет обновлено содержимое этой страницы, что мало того, что приведёт к лишним пересчётам, так они ещё и могут закончиться ошибками или просто мусором в качестве побочных эффектов. И только потом, при вычислении `Page` будет выяснено, что `PostPage` надо вообще уничтожить, а вместо неё следует отобразить сообщение об ошибке доступа `Forbidden`.
+In this example, `Post` is changed to one that we do not have access to. First, the contents of this page will be updated, which will not only lead to unnecessary recalculations, but they may also result in errors or just garbage as side effects. And only then, when calculating `Page`, it will be found out that `PostPage` should be completely destroyed, and instead a `Forbidden` access error message should be displayed.
 
-Обратите внимание, что существование `Title` и `Body` зависит от значения `Page`. Но сами значения `Title` и `Body` от значения `Page` уже не зависят. И наоборот, значение `Page` не зависит от значения `Title` и `Body`. То есть связь между ними нереактивная. Но она есть. И это уже связь "владелец - имущество". То есть значение `Page` владеет реактивными состояниями `Title` и `Body`, а значит и контролирует их время жизни.
+Note that the existence of `Title` and `Body` depends on the value of `Page`. But the `Title` and `Body` values ​​themselves no longer depend on the `Page` value. Conversely, the value of `Page` is independent of the value of `Title` and `Body`. That is, the connection between them is non-reactive. But it is there. And this is already a connection between owner and property. That is, the `Page` value owns the `Title` and `Body` reactive states, and therefore controls their lifetime.
 
-Одним лишь анализом реактивного графа эту проблему не решить. Разве что можно дополнить его графом владения. Но это потребует ещё большего усложнения логики рантайма. И я не уверен, что топологическую сортировку такого двойного графа можно осуществить с приемлемой алгоритмической сложностью. Иначе вся эта наша борьба за эффективность будет работать медленнее, чем куда более тупая, но простая архитектура.
+This problem cannot be solved by analyzing the reactive graph alone. Unless you can supplement it with a possession graph. But this will require even more complexity in the runtime logic. And I'm not sure that topological sorting of such a double graph can be done with acceptable algorithmic complexity. Otherwise, our whole struggle for efficiency will work slower than a much dumber but simpler architecture.
 
 ### Order: 👨‍💻Code
 
-Предпочтительнее, чтобы реакции отрабатывали в том порядке, который в явном виде задан в коде. Это гарантирует, что владелец будет актуализирован раньше, чем всё, чем он владеет.
+It is preferable that reactions are processed in the order that is explicitly specified in the code. This ensures that the owner is updated before everything he owns.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-order-code.svg)
 
-Тут уже сначала будет обновлён `Allow`, потом `Page`, что приведёт к потере `PostPage` и, как следствие, уничтожению `PostPage` со всеми состояниями внутри, без их вычисления.
+Here, `Allow` will be updated first, then `Page`, which will lead to the loss of `PostPage` and, as a result, the destruction of `PostPage` with all the states inside, without calculating them.
 
 ## Flow
 
-В реактивной системе все состояния связаны друг с другом инвариантами в единый граф. Когда мы что-то меняем с одной стороны этого графа, рантайм обеспечивает каскадный пересчёт зависимых состояний. Такие последовательности пересчётов являются ни чем иным, как *информационными потоками* (data flow). Чем более эти потоки прямолинейны, чем меньше они разветвляются и задевают нерелевантные изменениям состояния, тем эффективней работает система. И тут есть два подхода к оптимизации информационных потоков..
+In a reactive system, all states are connected to each other by invariants into a single graph. When we change something on one side of this graph, runtime provides a cascade recalculation of dependent states. Such sequences of recalculations are nothing more than *information flows* (data flow). The more straightforward these flows are, the less they branch out and affect states that are irrelevant to changes, the more efficiently the system operates. And here there are two approaches to optimizing information flows..
 
-- 🦽Manual: Ручная
-- 🚕Auto: Автоматическая
+-   Manual: Manual
+- 🚕Auto: Automatic
 
 ### Flow: 🦽Manual
 
-В библиотеках на основе проталкивания, автоматизировать потоки сложно, поэтому тут процветает ручное управление ими. А значит мы получаем ошибки двух типов..
+In push-based libraries, it is difficult to automate flows, so manual management of them thrives. This means we get two types of errors...
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-manual.svg)
 
-Во-первых, мы можем забыть на что-то подписаться, в результате чего получаем неконсистентность. В примере мы забыли подписаться на `Title`, и при его изменении, `Greeting` не пересчитывается.
+Firstly, we may forget to subscribe to something, resulting in inconsistency. In the example, we forgot to subscribe to `Title`, and when it changes, `Greeting` is not recalculated.
 
-Во-вторых, мы можем забыть от чего-то отписаться, в результате чего получаем лишние вычисления. В примере мы забыли отписаться от `Name`, и при его изменении, `Greeting` вычисляется заново, но получает то же самое значение.
+Secondly, we may forget to unsubscribe from something, resulting in unnecessary calculations. In the example, we forgot to unsubscribe from `Name`, and when it changes, `Greeting` is recalculated, but gets the same value.
 
-Но, если с ошибками ещё можно как-то совладать, то со сложностью ручных оптимизаций справиться уже не просто. Для банального логического ветвления нужно руками реализовать фактически транзистор, где у нас есть управляющий поток, который переключает выход между двумя входами. Для циклов и непрямой адресации же всё становится настолько сложно, что [мало кто вообще способен адекватно это описать](https://qna.habr.com/q/427478). В итоге всё сводится к тому, что, вместо точечных пересчётов, идёт пересчёт многих состояний на любой чих, что довольно медленно.
+But, if you can still somehow cope with errors, then it is no longer easy to cope with the complexity of manual optimizations. For banal logical branching, we need to actually implement a transistor by hand, where we have a control flow that switches the output between two inputs. For loops and indirect addressing, everything becomes so complicated that [few people are even able to adequately describe it](https://qna.habr.com/q/427478). In the end, it all comes down to the fact that, instead of point-by-point recalculations, many states are recalculated for any sneeze, which is quite slow.
 
 ### Flow: 🚕Auto
 
-В библиотеках, основанных на затягивании, обычно применяется автотрекинг зависимостей. Это мало того, что гораздо надёжней, так ещё и крайне просто для прикладного программиста. Ему не надо думать о потоках данных вообще - они динамически конфигурируются рантаймом наиболее оптимальным (для данного состояния приложения) образом.
+Draw-based libraries typically use dependency auto-tracking. Not only is this much more reliable, it is also extremely simple for an application programmer. He does not need to think about data streams at all - they are dynamically configured by runtime in the most optimal (for a given application state) way.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-auto.svg)
 
-Тут прикладные программисты делятся на два лагеря: одни боятся этой "магии" ибо не понимают как она работает, другие же просто не парятся - работает и работает, одной головной болью меньше.
+Here application programmers are divided into two camps: some are afraid of this “magic” because they don’t understand how it works, while others simply don’t give a damn - it works and works, one less headache.
 
-Ну и в сторонке стоит лагерь тех, кто просто знает как оно работает и использует это знание с пользой. Ведь как известно: любая достаточно развитая технология неотличима от магии.. для непосвящённого человека.
+Well, on the sidelines stands the camp of those who simply know how it works and use this knowledge to benefit. After all, as you know: any sufficiently developed technology is indistinguishable from magic... for the uninitiated person.
 
-Практика показывает, что (при автоматизации) прикладного кода получается на порядки меньше, сам он гораздо проще и надёжнее, а приложение работает быстрее.
+Practice shows that (with automation) the application code is orders of magnitude smaller, the code itself is much simpler and more reliable, and the application runs faster.
 
 ## Error
 
-Очень часто программисты не думают про нештатные ситуации. Особенно печально, когда это не прикладники, а авторы библиотек и фреймворков.
+Very often programmers do not think about emergency situations. It’s especially sad when these are not application developers, but authors of libraries and frameworks.
 
-Например, когда я готовил этот материал, я спросил в чате Эффектора, как ведёт себя система при возникновении исключений. На что мне ответили, что исключений в чистых функциях быть не должно (исключения, кстати, на самом деле чистоте не противоречат, но это уже другая история) и если ты их допустил, то сам дурак. Когда же я уточнил, знает ли автор вообще, как поведёт себя его библиотека в нештатной ситуации, меня обвинили в токсичности и забанили.
+For example, when I was preparing this material, I asked in the Effector chat how the system behaves when exceptions occur. To which they answered that there should be no exceptions in pure functions (exceptions, by the way, do not actually contradict purity, but that’s another story) and if you allowed them, then you yourself are a fool. When I asked whether the author even knew how his library would behave in an emergency situation, I was accused of being toxic and banned.
 
-Ну да мы отвлеклись. Багов тоже быть не должно, как и прочих плохих вещей в жизни, однако, они порой случаются. По вине программиста, браузера, расширений к нему, операционной системы, звёздного ветра - не важно. Надо уметь держать удар, а не прятать голову в песок. Но в разных библиотеках какого только поведения мы ни встретим..
+Well, we digress. There shouldn't be bugs either, like other bad things in life, however, they sometimes happen. The fault of the programmer, the browser, its extensions, the operating system, the stellar wind - it doesn’t matter. You have to be able to take a punch and not bury your head in the sand. But in different libraries we will encounter no matter what kind of behavior...
 
-- 🎲Unstable: Нестабильная работа
-- ⛔Stop: Прекращение работы
-- 🦺Store: Индикация ошибки и ожидание восстановления
-- ⏮Revert: Откат к стабильному состоянию
+- 🎲Unstable: Unstable operation
+- ⛔Stop: Stop work
+-   Store: Error indication and waiting for recovery
+- ⏮Revert: Revert to a stable state
 
 ### Error: 🎲Unstable
 
-Часто, в случае исключения, приложение переходит в неконсистентное состояние, что приводит к нестабильной работе.
+Often, in the event of an exception, the application goes into an inconsistent state, resulting in unstable operation.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-error-unstable.svg)
 
-В примере, допустим, в имени закрался некорректный `codepoint`. И, допустим, попытка взять длину строки приводит в этом случае к исключению. Пример довольно синтетический, позже я покажу более реалистичные, но пока так.
+In the example, let's say an incorrect `codepoint` has crept into the name. And, let's say, an attempt to take the length of a string leads in this case to an exception. The example is quite synthetic, later I will show more realistic ones, but for now that’s it.
 
-И вот, при вычислении инварианта произошло исключение, из-за чего рантайм не обновил `Count`. В результате, все состояния распались на 2 подграфа, которые сами по себе-то консистентны, но между собой уже не согласованы.
+And so, when calculating the invariant, an exception occurred, which is why the runtime did not update `Count`. As a result, all states split into 2 subgraphs, which themselves are consistent, but are no longer consistent with each other.
 
 ### Error: ⛔Stop
 
-Не менее странное решение - просто перестать функционировать, как это делает, например, RxJS. Если где-либо в стриме возникает исключение, то все стримы после него финализируются и уже никогда не заработают.
+An equally strange solution is to simply stop functioning, as, for example, RxJS does. If an exception occurs anywhere in the stream, then all streams after it are finalized and will never work again.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-error-stop.svg)
 
-Эта стратегия годится для одиночной задачи - её либо сделал, либо упал с ошибкой. Но реактивность - оно для долгоживущих систем, постоянно что-то отображающих. А значит, если отвалится реактивность, то приложение просто сломается, никак не сигнализируя об этом пользователю.
+This strategy is suitable for a single task - you either do it or fail with an error. But reactivity is for long-lived systems that constantly display something. This means that if reactivity fails, the application will simply break without signaling this to the user.
 
-Причём сломается лишь на половину. И чтобы восстановить работу потребуется перезапуск либо всего приложения, либо как минимум этой половины.
+Moreover, it will only break by half. And to restore operation, you will need to restart either the entire application, or at least this half.
 
-Случай из жизни: Со мной на этаже в гостинице заселилась толпа спортсменов. А это такие парни под 100 кг чистого мяса. И вот, забились мы с ними сегодня с утра в лифт, что ожидаемо привело к перегрузу. Лифт поднял лапки и сказал "всё".
+An incident from life: A crowd of athletes moved in with me on the hotel floor. And these are guys with 100 kg of pure meat. And so, we crammed into the elevator with them this morning, which predictably led to overload. The elevator raised its paws and said "that's it."
 
-Ну, ладно, парочка вышла - ничего не происходит. Ок, вышла ещё половина - тоже ничего. Таак, вышли все - лифт так и не заработал. И пришлось нам всем устроить сегодня пробежку по лестнице. Думаю софт для этого лифта написали на RxJS, не иначе.
+Well, okay, the couple left - nothing happens. Ok, another half came out - still nothing. So, everyone got out - the elevator still didn’t work. And we all had to do a run up the stairs today. I think the software for this elevator was written in RxJS, no less.
 
 ### Error: ⏮Revert
 
-Библиотеки типа reatom в принципе не допускают неконсистентности, выполняя пересчёт инвариантов в рамках транзакции. Так что в случае чего, все состояния откатываются к последнему согласованному.
+Libraries like reatom, in principle, do not allow inconsistency by recalculating invariants within a transaction. So if something happens, all states are rolled back to the last consistent one.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-error-revert.svg)
 
-Формально звучит не плохо. Но для пользователя это ужасное поведение, ведь из-за одной паршивой овцы где-то в углу приложения, которая постоянно кидает исключения, всё наше приложение встаёт колом и никак не реагирует на действия пользователя. Или попросту - намертво виснет. Что никуда не годится.
+Formally it doesn't sound bad. But for the user this is terrible behavior, because because of one black sheep somewhere in the corner of the application, which constantly throws exceptions, our entire application comes to a standstill and does not react in any way to the user’s actions. Or simply - it hangs tightly. Which is no good.
 
 ### Error: 🦺Store
 
-Гораздо практичнее рассматривать ошибку как возможный результат вычисления, наравне с возвращаемым значением.
+It is much more practical to consider the error as a possible result of the calculation, along with the return value.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-error-store.svg)
 
-Тут все состояния, которые зависят от не корректного, тоже помечаются как не корректные. А система рендеринга может автоматически показывать индикатор сбоя для частей приложения, которые не удалось обновить. Ну, либо вы можете перехватить исключение и нарисовать своё красивое сообщение. В любом случае пользователь будет понимать, что происходит, и что на сбойную часть приложения не стоит полагаться. А вот другими частями вполне можно продолжать пользоваться.
+Here, all states that depend on the incorrect one are also marked as incorrect. And the rendering system can automatically show a failure indicator for parts of the application that fail to update. Well, or you can catch the exception and draw your own beautiful message. In any case, the user will understand what is happening and that the faulty part of the application should not be relied upon. But you can continue to use other parts.
 
-Не смотря на то, что часть приложения сломана, состояние приложение всё ещё согласнованно. Ибо сообщение об ошибке на выходе как раз таки согласуется с некорректными значением на входе.
+Even though part of the application is broken, the state of the application is still consistent. Because the error message at the output is precisely consistent with the incorrect value at the input.
 
-При этом, устранение причины сбоя, автоматически восстановит корректную работу этой части приложения. Без дополнительных телодвижений со стороны программиста!
+At the same time, eliminating the cause of the failure will automatically restore the correct operation of this part of the application. Without additional movements on the part of the programmer!
 
 ## Cycle
 
-Иногда у нас могут получаться циклические зависимости. Порой мы их можем захотеть сделать намеренно. Например, при реализации конвертера между градусами Цельсия и Фаренгейта, где пользователь может менять любое из двух значений, а второе должно пересчитываться автоматически.
+Sometimes we can end up with cyclical dependencies. Sometimes we may want to do them intentionally. For example, when implementing a converter between degrees Celsius and Fahrenheit, where the user can change any of the two values, and the second should be recalculated automatically.
 
-Однако, в подавляющем большинстве случаев циклически зависимости свидетельствуют о проблеме с логикой, так что их обычно стараются избегать. Благо логику даже конвертера градусов всегда можно переписать так, чтобы циклических зависимостей не было.
+However, in the vast majority of cases, cyclic dependencies indicate a problem with logic, so they are usually avoided. Fortunately, the logic of even a degree converter can always be rewritten so that there are no cyclic dependencies.
 
-Итак, давайте рассмотрим, как разные системы реагируют на эту нештатную ситуацию..
+So let's look at how different systems react to this emergency situation.
 
-- 🚫Unreal: Невозможны
-- 💤Infinite: Бесконечный цикл
-- 🎰Limbo: Произвольный результат
-- 🌋Fail: Приводят к ошибке
-
+- 🚫Unreal: Impossible
+- 💤Infinite: Endless loop
+- 🎰Limbo: Arbitrary result
+- 🌋Fail: Causes an error
 ### Cycle: 🚫Unreal
 
-Довольно соблазнительна мысль сделать так, чтобы синтаксически невозможно было создавать циклы. Например, мы можем требовать при создании состояния, чтобы все его зависимости уже существовали. Как правило, это свойственно библиотекам с проталкиванием.
+It's quite tempting to think of making it syntactically impossible to create loops. For example, we can require, when creating a state, that all of its dependencies already exist. This is typically the case with push libraries.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-cycle-unreal.svg)
 
-Звучит, вроде бы, не плохо. Однако вместе с водой мы выплеснули и ребёнка. То есть крайне ограничили себя в том, какую логику инвариантов мы способны описать. В частности, это практически ставит крест на динамической конфигурации потоков данных. Например, электронную таблицу на такой архитектуре реализовать уже не получится.
+It doesn't sound bad. However, we threw out the baby with the bathwater. That is, we have extremely limited ourselves in what kind of logic of invariants we are able to describe. In particular, this practically puts an end to the dynamic configuration of data streams. For example, it will no longer be possible to implement a spreadsheet on such an architecture.
 
 ### Cycle: 💤Infinite
 
-Ряд библиотек просто уходят в бесконечный цикл, постоянно обновляя одни и те же состояния.
+A number of libraries simply go into an endless loop, constantly updating the same states.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-cycle-allow.svg)
 
-Для Angular и React, например, это типичное поведение. Там даже костыль есть - ограничение на число пересчётов одного инварианта. Но об этом мы ещё поговорим.
+For Angular and React, for example, this is typical behavior. There is even a crutch - a limit on the number of recalculations of one invariant. But we'll talk about this later.
 
 ### Cycle: 🎰Limbo
 
-Бывает и совсем странное решение - при косвенном обращении к тому стейту, который сейчас вычисляется, используется его предыдущее значение.
+There is also a very strange solution - when indirectly accessing the state that is currently being calculated, its previous value is used.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-cycle-limbo.svg)
 
-В зависимости от порядка вычислений, этот подход даёт разные результаты. То есть состояние мало того, что получается несогласованным, так ещё и поведение приложения становится не стабильным, а начинает зависеть от погоды на Марсе.
+Depending on the order of calculations, this approach gives different results. That is, not only does the state turn out to be inconsistent, but also the behavior of the application becomes not stable, but begins to depend on the weather on Mars.
 
 ### Cycle: 🌋Fail
 
-Наилучшее решение - детектирование цикла в рантайме и выбрасывание исключения.
+The best solution is to detect the loop at runtime and throw an exception.
 
 ![](https://raw.githubusercontent.com/nin-jin/slides/master/reactivity/reactivity-cycle-fail.svg)
 
-Далее обработка уже идёт так же, как и с любыми другими нештатными ситуациями. Так что тут особенно важно, чтобы система правильно работала с исключениями.
+Further processing proceeds in the same way as with any other emergency situations. So it is especially important here that the system handles exceptions correctly.
 
 ## Depth
 
-Как правило, глубина зависимостей остаётся сравнительно не большой, не превышающей пары десятков состояний.
+As a rule, the depth of dependencies remains relatively small, not exceeding a couple of dozen states.
 
-Но порой зависимости могут вырастать на неприличную глубину. Это особенно характерно для приложений, где сам пользователь может управлять тем, кто от кого и как зависит. Типичные примеры: электронная таблица или диаграмма Ганта.
+But sometimes addictions can grow to indecent depths. This is especially true for applications where the user himself can control who depends on whom and how. Typical examples: spreadsheet or Gantt chart.
 
-И далеко не все модели реактивности вообще позволят вам это реализовать. А узнаёшь об этом порой лишь, когда уже поздно менять лошадей. И начинается костылеварение. Так что присмотримся к этому аспекту повнимательнее..
+And not all reactivity models will allow you to implement this. And sometimes you only find out about it when it’s too late to change horses. And the crutching begins. So let's take a closer look at this aspect...
 
-- 🚧Limit: Ограничена константой
-- 🗻Stack: Ограничена стеком
-- 🌌Heap: Не ограничена
+- 🚧Limit: Limited by a constant
+- 🗻Stack: Limited by stack
+- 🌌Heap: Unlimited
 
 ### Depth: 🚧Limit
 
-Некоторые библиотеки борятся с циклическими зависимостями путём введения ограничения на число пересчётов за раз. Обычно это десяток-другой пересчётов.
+Some libraries deal with circular dependencies by introducing a limit on the number of recalculations at a time. Usually this is a dozen or two recounts.
 
 ```ts
 for( let i = 0; i < MAX_REPEATS; ++i ) {
@@ -688,11 +684,11 @@ for( let i = 0; i < MAX_REPEATS; ++i ) {
 throw new Error( 'Too many change detection repeats' )
 ```
 
-Это предотвращает полное зависание приложения. Но и капитально ограничивает глубину зависимостей. Электронную таблицу в таких условиях реализовывать будет больно.
+This prevents the application from freezing completely. But it also fundamentally limits the depth of dependencies. It will be painful to implement a spreadsheet in such conditions.
 
 ### Depth: 🗻Stack
 
-Чуть лучше обстоит ситуация с моделями реактивности, где нет никаких искусственных ограничений. Однако, они инициируют одни вычисления внутри других, что приводит к росту стека.
+The situation is slightly better with reactivity models, where there are no artificial restrictions. However, they initiate some calculations inside others, which leads to the growth of the stack.
 
 ```ts
 first() {
@@ -708,15 +704,15 @@ thisrd() {
 }
 ```
 
-А так как размер стека не бесконечен, то его хватает лишь для глубины в несколько тысяч состояний. Этого уже может хватить даже для средних электронных таблиц. Однако, стоит выйти за пределы стека, и всё, приехали, вылетает исключение.
+And since the stack size is not infinite, it is only sufficient for a depth of several thousand states. This may already be enough for even average spreadsheets. However, if you go beyond the stack, and that’s it, an exception is thrown.
 
-Причём оно может вылететь, а может не вылететь в зависимости от того в каком порядке пошли пересчёты. То есть мы получаем ещё и нестабильность поведения. Например, это может проявляться так: при открытии приложения всё хорошо, но стоит изменить одно состояние, пересчёт глубоко зависимого от него падает.
+Moreover, it may or may not fly out, depending on the order in which the recalculations took place. That is, we also get instability of behavior. For example, this can manifest itself like this: when you open an application, everything is fine, but as soon as you change one state, the recalculation of a state that is deeply dependent on it drops.
 
-Однако, преимущество такого подхода в том, что по стеку видно в каком порядке производился пересчёт, что может быть полезно при отладке.
+However, the advantage of this approach is that the stack shows in what order the recalculation was performed, which can be useful for debugging.
 
 ### Depth: 🌌Heap
 
-Наилучший же вариант не наращивает стек, что позволяет ему работать с зависимостями произвольной глубины. Ну, на сколько хватит оперативки, конечно же.
+The best option does not grow the stack, which allows it to work with dependencies of arbitrary depth. Well, how much RAM is enough, of course.
 
 ```ts
 while( reactions.length ) {
@@ -724,19 +720,19 @@ while( reactions.length ) {
 }
 ```
 
-К сожалению, тут стек-трейсы становятся уже малоинформативными. Но на помощь при отладке может прийти уже логирование, которое при желание можно даже подклеивать в стек-трейс вручную.
+Unfortunately, here stack traces become less informative. But logging can come to the rescue when debugging, which, if desired, can even be pasted into the stack trace manually.
 
 ## Atomic
 
-Пока что мы говорили про нештатные ситуации при вычислении инвариантов. Однако, они могут возникнуть и на подлёте - во время внесения изменений в несколько исходных состояний одновременно. Давайте разберём, что тут может пойти не так..
+So far we have talked about emergency situations when calculating invariants. However, they can also arise on approach - during changes to several initial states at the same time. Let's look at what could go wrong here...
 
-- 👻Alone: Одного отдельного состояния
-- 🦶Base: Для первичных состояний
-- 🤼Full: Для всех состояний
+- 👻Alone: ​​One separate state
+-   Base: For primary states
+- 🤼Full: For all conditions
 
 ### Atomic: 👻Alone
 
-Как правило, изменение одного состояния везде атомарно. То есть оно либо произойдёт, либо не произойдёт. Рассмотрим простой пример: нам надо обновить два состояния, но после обновления первого возникла нештатная ситуация..
+As a rule, a change in one state is atomic everywhere. That is, it will either happen or it won’t happen. Let's consider a simple example: we need to update two states, but after updating the first one, an abnormal situation arose..
 
 ```ts
 Name = 'John'
@@ -747,13 +743,13 @@ throw 'function is not a function'
 Count = 3 // still 4
 ```
 
-В результате мы получаем несогласованное состояние приложения. Ведь одно состояние обновилось, а второе - нет.
+The result is an inconsistent application state. After all, one state has been updated, but the second has not.
 
-Эту проблему можно обойти, если хранить оба значения в одном состоянии. Но это возможно не всегда.
+You can work around this problem by storing both values ​​in the same state. But this is not always possible.
 
 ### Atomic: 🦶Base
 
-Хорошо, если рантайм поддерживает транзакции. Они гарантируют, что либо все исходные состояния получат свои обновления, и пойдут обновляться зависимые состояния, либо не изменится никто, и зависимые состояния обновляться тоже не пойдут.
+It's good if the runtime supports transactions. They guarantee that either all initial states will receive their updates, and dependent states will be updated, or no one will change, and dependent states will not be updated either.
 
 ```ts
 Name = 'John'
@@ -768,7 +764,7 @@ Count = 4
 
 ### Atomic: 🤼Full
 
-В некоторых библиотеках транзакцию могут откатить не только исключения возникшие непосредственно при внесении изменений, но и исключения в инвариантах, которые пошли вычисляться в результате внесённых изменений.
+In some libraries, a transaction can be rolled back not only by exceptions that occurred directly when changes were made, but also by exceptions in invariants that were calculated as a result of the changes made.
 
 ```ts
 Name = 'John'
@@ -785,18 +781,18 @@ Count = 4
 }
 ```
 
-В примере, у нас есть вторичное состояние `Greeting`, которое при коротком имени кидает исключение, и не может быть вычислено. Рантайм, видя это, откатывает всю транзакцию. В результате, мы снова получаем ситуацию, когда одна кривая вьюшка где-нибудь в углу приложения не даёт нам обновить модель и всё приложение встаёт колом.
+In the example, we have a secondary state `Greeting`, which, with a short name, throws an exception and cannot be calculated. Runtime, seeing this, rolls back the entire transaction. As a result, we again get a situation where one crooked view somewhere in the corner of the application does not allow us to update the model and the entire application comes to a standstill.
 
 ## Extern
 
-Порой инвариант требует асинхронной коммуникации. Например, при тяжёлых расчётах в отдельном воркере. Большинство реактивных библиотек не поддерживает асинхронные инварианты, но есть и такие, которые поддерживают. Рассмотрим оба варианта..
+Sometimes an invariant requires asynchronous communication. For example, for heavy calculations in a separate worker. Most reactive libraries do not support asynchronous invariants, but there are some that do. Let's consider both options..
 
-- 🏊Sync: Синхронные инварианты
-- 🏇Async: (А)синхронные инварианты
-
+- 🏊Sync: Synchronous invariants
+- 🏇Async: (A) synchronous invariants
+  
 ### Extern: 🏊Sync
 
-Если поддерживается лишь синхронная реактивность, а нам нужно выполнить какой-то асинхронный вызов, то он обычно идёт где-то в сторонке. Возьмём простой пример на RxJS..
+If only synchronous reactivity is supported, and we need to perform some kind of asynchronous call, then it usually goes somewhere to the side. Let's take a simple example using RxJS...
 
 ```ts
 const image = source_element.pipe( map( capture ) )
@@ -808,15 +804,15 @@ text.subscribe( text => {
 } )
 ```
 
-Функции `capture` и `recognize` асинхронные, так как первой надо дождаться загрузки изображения, а вторая запускает нейронки на пуле воркеров. Когда мы поменяем `source_element`, то `output.innerText` никак не поменяется. То есть состояния перестанут быть согласованными. И к согласованности они придут лишь когда все асинхронные операции завершатся.
+The `capture` and `recognize` functions are asynchronous, since the first one needs to wait for the image to load, and the second one launches neurons on a pool of workers. When we change `source_element`, `output.innerText` will not change at all. That is, the states will no longer be consistent. And they will come to consistency only when all asynchronous operations are completed.
 
-Решается эта проблема обычно интерактивной установкой какого-нибудь флага `isLoading` вначале и интерактивным сбросом его в конце. И когда этот флаг поднят - реактивно рисуется индикатор ожидания.
+This problem is usually solved by interactively setting some `isLoading` flag at the beginning and interactively resetting it at the end. And when this flag is raised, the waiting indicator is drawn reactively.
 
-Мало того, что это рутина, так она ещё и зачастую подвержена багам, когда на один индикатор завязывается несколько выполняемых задач. Что при интерактивной логике может вызывать так называемое *состояние гонки*.
+Not only is this a routine, but it is also often prone to bugs when several tasks being performed are tied to one indicator. Which, with interactive logic, can cause a so-called *race condition*.
 
 ### Extern: 🏇Async
 
-Если же поддерживаются и асинхронные инварианты, то рантайм поддерживает согласованность автоматически. Типичное решение - через механизм работы с нештатными ситуациями. Давайте напишем, как может выглядеть код с использованием, например, генераторов..
+If asynchronous invariants are also supported, then runtime maintains consistency automatically. A typical solution is through a mechanism for dealing with emergency situations. Let's write what the code might look like using, for example, generators..
 
 ```ts
 @computed
@@ -827,15 +823,15 @@ text*() {
 }
 ```
 
-Почему не асинхронные функции? Да потому, что они в JS сделаны через задницу. Вот авторам библиотек и приходится костылять на генераторах, которые сделаны через противоположное место, но тоже не через то, что следовало бы.
+Why not asynchronous functions? Yes, because they are made in JS through the ass. So the authors of libraries have to rely on generators that are made through the opposite place, but also not through what they should.
 
-На самом деле можно обойтись даже и без генераторов. В $mol, Vue и React поддерживается SuspenseAPI, позволяющий писать псевдосинхронный код и не мучаться с `yield` и `await`. Ну да не важно, генераторы для моего повествования будут нагляднее.
+In fact, you can even do without generators. $mol, Vue and React support SuspenseAPI, which allows you to write pseudo-synchronous code and not have to worry about `yield` and `await`. Well, it doesn’t matter, the generators for my story will be clearer.
 
-Когда рантайм вызывает генератор `text` ему вместо строки йелдится промис. Он понимает, что финальный результат будет позже, подписывается на финализацию промиса, а тем временем помечает состояние как "ожидающее значения". Этот флаг ожидания распространяется на все зависимые состояния. А система рендеринга, видя это, автоматически рисует индикатор ожидания. Классно же!
+When runtime calls the `text` generator, it is given a promise instead of a string. It understands that the final result will come later, subscribes to the finalization of the promise, and in the meantime marks the state as “pending value.” This wait flag applies to all dependent states. And the rendering system, seeing this, automatically draws a waiting indicator. Cool!
 
 # Practicality
 
-Давайте теперь возьмём все наши знания о реактивности и попробуем сформулировать, как могла бы выглядеть наиболее практичная модель реактивности. Какими свойствами она должна обладать, чтобы пользоваться ею было приятно, чтобы она доставляла нам минимум проблем, чтобы у пользователя всё было стабильно, быстро, и всегда было понятно, что происходит..
+Let's now take what we know about reactivity and try to formulate what the most practical model of reactivity might look like. What properties should it have to make it pleasant to use, so that it gives us a minimum of problems, so that the user has everything stable, fast, and always understands what is going on..
 
 | Aspect  | ✅Usable   | ❌Unusable
 |---------|------------|---------
@@ -855,22 +851,22 @@ text*() {
 | Atomic  | 🦶Base     | 🤼‍♂️Full 👻Alone
 | Extern  | 🏇Async    | 🏊‍♂️Sync
 
-Давайте теперь возьмём разные известные библиотеки и фреймворки и посмотрим, насколько они близки к идеалу.. Но сперва, небольшая ремарка..
+Let's now take various well-known libraries and frameworks and see how close they are to ideal... But first, a small note...
 
-# Default
+#Default
 
-Далее рассматривается лишь поведение по умолчанию и рекомендуемый автором стиль кода. Понятное дело, что всегда можно как-то обойти проблемы. Где-то поведение можно поменять параметром конфига. Где-то нужно не забывать писать дополнительный код тут и там. Где-то нужно креативить адские костыли. А где-то вообще придётся отказаться от одной библиотеки, и прикрутить сбоку другую.
+Below we consider only the default behavior and the code style recommended by the author. It is clear that you can always somehow get around the problems. Somewhere the behavior can be changed with a config parameter. Somewhere you need to remember to write additional code here and there. Somewhere you need to get creative with hellish crutches. And in some cases you will have to abandon one library altogether and add another one on the side.
 
-Однако, важно понимать, что автор библиотеки, даже если он глубоко не прав, скорее всего имеет большую экспертизу, чем обычный прикладной разработчик. В этой теме вообще, и в своей библиотеке в особенности. Поэтому большинство стороннего кода с её помощью будет написано именно в каноничном стиле, рассчитанном на поведение по умолчанию. А любое отхождение от дефолта потребует дополнительного кода, который надо и не забыть написать, и потратить время, чтобы написать его правильно.
+However, it is important to understand that the author of the library, even if he is deeply wrong, most likely has greater expertise than an ordinary application developer. In this topic in general, and in my library in particular. Therefore, most third-party code using it will be written in the canonical style, designed for default behavior. And any departure from the default will require additional code, which you must remember to write, and spend time writing it correctly.
 
-- 🎓 Выбор эксперта
-- 🐭 Минимум кода
-- 👀 Повышенное внимание
-- 👾 Сторонний код
+- 🎓 Expert's choice
+- 🐭 Minimum code
+- 👀 Increased attention
+- 👾 Third party code
+  
+Further comparison is useful not so much in order to understand which one should be taken urgently and which one should be thrown away immediately. But also in order to understand what you need to be prepared for when starting a project on a particular technology.
 
-Дальнейшее сравнение, полезно не столько для того, чтобы понимать, какую либу надо срочно брать, а какую немедленно выбрасывать. Но и для того, чтобы понимать, к чему нужно быть готовым, затевая проект на той или иной технологии.
-
-Какие-то аспекты могут быть для вас совершенно не важными. Некоторые могут оказаться *шоу-стоперами*. А некоторые можно легко обойти. И хорошо бы заранее подложить себе соломки, чтобы не заниматься потом мучительной отладкой и оптимизацией.
+Some aspects may be completely unimportant to you. Some may turn out to be *show stoppers*. And some can be easily bypassed. And it would be nice to lay some straws in advance so as not to have to deal with painful debugging and optimization later.
 
 # Reactive Libraries
 
@@ -884,19 +880,19 @@ text*() {
 | [Effector](https://effector.dev/)                                  | 🤯❌ | 🤝✅ | 🆔❌ | 🥌❌  | 🍔❌ | 📰❌ | 🦽❌ | 🎲❌ | 💤❌ | 🌌✅ | 👻❌  | 🏊‍♂️❌
 | [RxJS](https://rxjs.dev/)                                          | 🤯❌ | 🤝✅ | 👯‍♀️❌ | 🥌❌  | 🍔❌ | 📰❌ | 🦽❌ | ⛔❌ | 🚫❌ | 🗻❌ | 👻❌  | 🏊‍♂️❌
 
-Тут видно два основных лагеря: "Объектное Реактивное Программирование" и "Функциональное Реактивное Программирование". Как видите, модный сейчас функциональный подход не очень практичен, в отличие от более олдскульного подхода с объектами.
+There are two main camps here: “Object Reactive Programming” and “Functional Reactive Programming”. As you can see, the currently fashionable functional approach is not very practical, unlike the more old-school object approach.
 
-Стоит так же отметить, что сам по себе RxJS не про реактивность. Он, в основе своей, про контроль потока исполнения. Однако, с его помощью можно описывать инварианты, связывающие состояния, и тогда мы получаем реактивную систему.
+It’s also worth noting that RxJS itself is not about reactivity. It is fundamentally about controlling the flow of execution. However, with its help it is possible to describe invariants connecting states, and then we get a reactive system.
 
-Большое спасибо авторам библиотек за помощь в подготовке этой таблицы. Пишите мне, если хотите добавить и свою к сравнению. Я постараюсь поддерживать эту табличку в актуальном состоянии, если комьюнити, конечно, поможет мне уследить за всеми новостями.
+Many thanks to the library authors for their help in preparing this table. Write to me if you want to add yours to the comparison. I will try to keep this sign up to date, if the community, of course, helps me keep track of all the news.
 
 # $mol_wire
 
-Лидером, конечно, оказался $mol_wire, который был реализован мной уже после проведения данного анализа. О том, чем он хорош и почему работает так как работает, есть обстоятельная статья, с которой я очень рекомендую ознакомиться, ведь в конце вас ждёт несколько приятных сюрпризов..
+The leader, of course, turned out to be $mol_wire, which I implemented after this analysis. There is a detailed article about why it is good and why it works the way it does, which I highly recommend reading, because at the end there will be some pleasant surprises waiting for you..
 
-> [Проектируем идеальную систему реактивности](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=48)
+> [Designing an ideal reactivity system](https://mol.hyoo.ru/#!section=articles/author=nin-jin/repo=HabHub/article=48)
 
-Его предшественник `$mol_atom2` обладал всеми теми же качествами, так что во фреймворке $mol мы довольно быстро полностью переехали на новую реализацию реактивности. И, кстати, о фреймворках..
+Its predecessor `$mol_atom2` had all the same qualities, so in the $mol framework we quite quickly completely moved to the new implementation of reactivity. And by the way, about frameworks...
 
 # Reactive Frameworks
 
@@ -909,78 +905,78 @@ text*() {
 | [Angular](https://angular.io/)    | 🧐❌ | 🔎❌ | 🆔❌ | 🥌❌  | ⏰❌ | 👨‍💻✅ | 🚕✅ | 🎲❌ | 🎰❌ | 🚧❌ | 👻❌  | 🏊‍♂️❌
 | [Svelte](https://svelte.dev/)     | 🧐❌ | 🔎❌ | 🆔❌ | 🥌❌  | ⏰❌ | 👨‍💻✅ | 🚕✅ | ⛔❌ | 🚫❌ | 🌌✅ | 👻❌  | 🏊‍♂️❌
 
-Анализ фреймворков с точки зрения реактивности является несколько условным. Проявляется она обычно в двух аспектах: инварианты между состояниями одного компонента, и связь состояния одного компонента с параметрами другого.
+Analysis of frameworks in terms of reactivity is somewhat arbitrary. It usually manifests itself in two aspects: invariants between the states of one component, and the connection between the state of one component and the parameters of another.
 
-Как видите, тут более популярна процедурщина, которая является тоже не самым практичным подходом. А самым практичным тут оказывается объектный Vue. Круче него только [$mol](https://mol.hyoo.ru/), но отдельно как фреймворк его тут рассматривать нет смысла, ибо он просто использует библиотеку $mol_wire в качестве кровеносной системы, а её мы уже разобрали ранее.
+As you can see, proceduralism is more popular here, which is also not the most practical approach. And the most practical thing here is object-based Vue. Only [$mol](https://mol.hyoo.ru/) is cooler than it, but there is no point in considering it separately as a framework, because it simply uses the $mol_wire library as a circulatory system, and we have already analyzed it earlier.
 
-Важно отметить, что не стоит слепо доверять этим табличкам, ибо составлены они вручную. Я, конечно, старался всё отразить максимально точно, но мог где-то и накосячить. Поэтому..
+It is important to note that you should not blindly trust these plates, because they are compiled manually. I, of course, tried to reflect everything as accurately as possible, but I could have messed up somewhere. That's why..
 
 # More about Reactivity
 
-- [state-management-specification](https://github.com/artalar/state-management-specification) / Артём Арутюнян
+- [state-management-specification](https://github.com/artalar/state-management-specification) / Artyom Harutyunyan
 - [What Makes a Good Reactive System?](https://www.pzuraq.com/what-makes-a-good-reactive-system/) / Chris Garrett
 - [A General Theory of Reactivity](https://github.com/kriskowal/gtor) / Kris Kowal
 - [A Hands-on Introduction to Fine-Grained Reactivity](https://dev.to/ryansolid/a-hands-on-introduction-to-fine-grained-reactivity-3ndf)
-- [Объектное Реактивное Программирование](https://github.com/nin-jin/slides/tree/master/orp) / Me @ FrontendConf'17
-- [Квантовая механика вычислений на JS](https://github.com/nin-jin/slides/tree/master/fibers) / Me @ HolyJS'18
+- [Object Reactive Programming](https://github.com/nin-jin/slides/tree/master/orp) / Me @ FrontendConf'17
+- [Quantum mechanics of calculations in JS](https://github.com/nin-jin/slides/tree/master/fibers) / Me @ HolyJS'18
 
-У Артёма (автора Reatom) есть интересный проект по классификации стейт-менеджеров с помощью тестов. Это чуть более широкая тема, так как, например, Redux - это стейт-менеджер, но он не реактивный. Это просто транзакционное изменение дерева состояний и всё, никаких каскадных инвариантов между состояниями. Если вас заинтересовала эта тема, то подключайтесь к написанию тестов - это будет полезно для всего комьюнити.
+Artyom (author of Reatom) has an interesting project to classify state managers using tests. This is a slightly broader topic, since, for example, Redux is a state manager, but it is not reactive. This is just a transactional change in the state tree and that’s it, no cascading invariants between states. If you are interested in this topic, then get involved in writing tests - it will be useful for the entire community.
 
-В серии статей от Chris Garrett можно ознакомиться с тем, как была переосмыслена реактивная модель во фреймворке Ember. Я оставил ссылку на наиболее релевантную из них.
+In a series of articles from Chris Garrett, you can see how the reactive model was rethought in the Ember framework. I have left a link to the most relevant one.
 
-Обстоятельная статья Kris Kowal рассматривает вопрос реактивности с иных позиций. На мой взгляд он не прав, но для расширения кругозора можно почитать. А вот с кем я согласен, так это с автором SolidJS - Ryan Carniato, рассказывающем о том, как сделать практичную реактивную систему.
+An in-depth article by Kris Kowal looks at the issue of reactivity from a different perspective. In my opinion, he is wrong, but you can read it to broaden your horizons. But the one I agree with is the author of SolidJS - Ryan Carniato, who talks about how to make a practical reactive system.
 
-На конец: пара моих выступлений, разбирающих преимущества ОРП и механику реализации асинхронных инвариантов, помогут ещё глубже закопаться в тему.
+Finally: a couple of my speeches examining the advantages of ORP and the mechanics of implementing asynchronous invariants will help to delve even deeper into the topic.
 
 # After Party
 
-Для тех, кто добрался до конца, но ещё не устал, могу предложить глянуть так же и дискуссию о менеджерах состояний, которая развернулась после выступления, между мной и Сергеем Совой, мейнтейнером Effector-а..
+For those who have reached the end, but are not yet tired, I can also suggest watching the discussion about state managers that unfolded after the speech between me and Sergei Sova, Effector’s maintainer..
 
-[![О стейт-менеджерах: Дмитрий Карловский VS Сергей Сова](https://www.youtube.com/embed/NhPjUO6trGY)](https://www.youtube.com/watch?v=NhPjUO6trGY)
+[![About state managers: Dmitry Karlovsky VS Sergey Sova](https://www.youtube.com/embed/NhPjUO6trGY)](https://www.youtube.com/watch?v=NhPjUO6trGY)
 
 # Pre Party
 
-Если же и этого вам окажется мало, то приглашаю на прошлогоднюю дискуссию о стейт менеджерах в более расширенном составе..
+If this is not enough for you, then I invite you to last year’s discussion about state managers in a more expanded format..
 
 [![State Management Talks](https://www.youtube.com/embed/cUSyJk6k2rk)](https://www.youtube.com/watch?v=cUSyJk6k2rk)
 
 # More from Me
 
-Вот уже 10 лет я активно делюсь знаниями, идеями, пилю оупенсорс. И каждый мой материал - это оригинальная, и порой радикальная, идея, проверенная на практике. Так что стоит ознакомиться со всем этим, даже если не планируете использовать.
+For 10 years now I have been actively sharing knowledge, ideas, and open source. And each of my materials is an original, and sometimes radical, idea, tested in practice. So it's worth checking out all of this, even if you don't plan to use it.
 
-- [slides.hyoo.ru](https://slides.hyoo.ru/) - мои выступления (10+)
-- [Core Dump](https://www.youtube.com/channel/UC-qEImMrqSLZ9KLee1JTcuw) - видео о фундаментальном (4+)
-- [habhub.hyoo.ru](https://habhub.hyoo.ru/) - мои статьи (40+)
-- [`_jin_nin_`](https://twitter.com/_jin_nin_) - новости о разработке (>9000)
+- [slides.hyoo.ru](https://slides.hyoo.ru/) - my performances (10+)
+- [Core Dump](https://www.youtube.com/channel/UC-qEImMrqSLZ9KLee1JTcuw) - video about fundamental (4+)
+- [habhub.hyoo.ru](https://habhub.hyoo.ru/) - my articles (40+)
+- [`_jin_nin_`](https://twitter.com/_jin_nin_) - development news (>9000)
 
 # Contribution
 
-Второй год я уже не рабтаю, а занимаюсь компьютерной наукой и оуперсорс проектами. Так что если вы найдёте мою работу полезной, то поблагодарить меня можно задонатив или даже запатронив..
+This is the second year that I have stopped working, but am engaged in computer science and super-source projects. So if you find my work useful, you can thank me by donating or even patronizing me..
 
-- [yasobe.ru/na/mol](http://yasobe.ru/na/mol) - разовое спасибо
-- [boosty.to/hyoo](https://boosty.to/hyoo) - постоянная поддежка
-- [hyoo-ru/hyoo.ru/wiki](https://github.com/hyoo-ru/hyoo.ru/wiki/%D0%9E%D0%B1%D0%B7%D0%BE%D1%80-%D0%BD%D0%B0%D1%88%D0%B8%D1%85-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1%82%D0%BE%D0%B2) - наши открытые проекты
+- [yasobe.ru/na/mol](http://yasobe.ru/na/mol) - one-time thank you
+- [boosty.to/hyoo](https://boosty.to/hyoo) - constant support
+- [hyoo-ru/hyoo.ru/wiki](https://github.com/hyoo-ru/hyoo.ru/wiki/%D0%9E%D0%B1%D0%B7%D0%BE%D1% 80-%D0%BD%D0%B0%D1%88%D0%B8%D1%85-%D0%BF%D1%80%D0%BE%D0%B4%D1%83%D0%BA%D1% 82%D0%BE%D0%B2) - our open projects
+  
+We, in the $hyoo guild, have many interesting projects that should soon change the world. So the most valuable contribution you can make is not even money, but participation in projects.
 
-У нас, в гильдии $hyoo, много интересных проектов, которые вскоре должны перевернуть мир. Так что самый ценный вклад, который вы можете внести, - это даже не деньги, а участие в проектах.
+We want to create an ecosystem of tightly integrated web services using the most advanced and cheap technologies. And to displace the open source of the current Internet giants. Join our little revolution!
 
-Мы хотим сделать экосистему тесно интегрированных веб-сервисов, использующих самые передовые и дешёвые технологии. И потеснить оупенсорсом нынешних интернет-гигантов. Присоединяйтесь и вы к нашей маленькой революции!
+You can also invite me to conduct a seminar in your company. Not only about reactivity, of course. I have something to say on many issues. And not superficially, but with deep analysis.
 
-А ещё вы можете позвать меня провести семинар в вашей компании. Не только о реактивности, конечно. Мне есть что рассказать по многим вопросам. Причём не поверхностно, а с глубоким анализом.
+#LastWords
 
-# Last Words
-
-Вот теперь уж точно всё. Спасибо за внимание. Надеюсь сей разбор оказался для вас полезным.
+That's all for sure now. Thank you for your attention. I hope this analysis was useful to you.
 
 ![](https://habrastorage.org/webt/um/jg/hz/umjghz4nc3jqzxx5morka4jm-58.jpeg)
 
-А теперь, форсируем наши реактивные движки и летим в светлое будущее!
+And now, let’s boost our jet engines and fly into a bright future!
 
 ## First Feedback
 
-- Было интересно наблюдать за спором сеньёров, из которого наблюдатель может для себя извлечь информационную пользу. 
-- Информативно и развернуто.
-- Интересно и доходчиво.
-- Сам интересуюсь этой темой много лет как хобби, а тут человек основательно этим занимался и подробно осветил тему.
+- It was interesting to watch the dispute between the lords, from which the observer could derive informational benefit.
+- Informative and detailed.
+- Interesting and intelligible.
+“I myself have been interested in this topic for many years as a hobby, but here a person was thoroughly involved in this and covered the topic in detail.
 
 ## Last Feedback
 
@@ -988,3 +984,7 @@ text*() {
 - [DEV](https://dev.to/ninjin/main-aspects-of-reactivity-58co)
 - [andrey_sitnik](https://twitter.com/andrey_sitnik/status/1460956157854752768)
 - [_sergeysova](https://twitter.com/_sergeysova/status/1461729153359745032)
+
+
+
+
